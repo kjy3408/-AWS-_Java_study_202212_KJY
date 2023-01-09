@@ -6,9 +6,10 @@ public class StudentService {
 	Scanner scanner ;
 	StudentRepository sr;
 	Student[] sArray;
-//	char select = '\0';
+
 	
-	
+	String name;
+	int score;
 	
 	public StudentService() {
 		scanner = new Scanner(System.in);
@@ -16,9 +17,7 @@ public class StudentService {
 		sr = new StudentRepository(sArray);
 	}
 	
-	
-	
-	
+
 	public void run() {
 		boolean flag = true;
 		char select = '\0';
@@ -31,9 +30,11 @@ public class StudentService {
 		
 	}//run
 	
+	
 	public void stop() {
 		System.out.println("프로그램을 종료합니다.");
 	}
+	
 	
 	public void showView() {
 		System.out.println("=====학점 출력 시스템=====");
@@ -46,6 +47,7 @@ public class StudentService {
 	
 		
 	}
+	
 	
 	public char inputSelected() {
 		System.out.print("원하는 메뉴를 선택하세요 : ");
@@ -77,17 +79,15 @@ public class StudentService {
 				}else if(select == '3') {
 					tranceferGrade(score);
 				}else {
-					System.out.println("다시 입력 바람");
+					errorMessage();
 				}
 			 System.out.println();
 		}
 		return flag;
 	}
 
+
 	
-	
-	String name;
-	int score;
 	public void registerStudent() {
 		System.out.print("이름 입력 : ");
 		name = scanner.nextLine();
@@ -101,6 +101,7 @@ public class StudentService {
 	}
 	
 
+	
 	private void tranceferGrade(int score) {
 		if(0 > score || 100 < score) {
 			System.out.println("//점수 입력 오류//");
@@ -109,14 +110,17 @@ public class StudentService {
 			System.out.println("A학점");
 		}else if(score > 79) {
 			System.out.println("B학점");
-		}else if(score > 79) {
+		}else if(score > 69) {
 			System.out.println("C학점");
-		}else if(score > 79) {
+		}else if(score > 59) {
 			System.out.println("D학점");
 		}else {
 			System.out.println("F학점");
 		}
 	}
 	
-	
+	private void errorMessage() {
+		System.out.println();
+		System.out.println("다시 입력 바람.");
+	}
 }

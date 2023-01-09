@@ -58,23 +58,6 @@ public class J12_UserRepository {
 		return user;																	//찾은 값을 user에 넣어놨으니 부른곳으로 다시 돌려줘라.
 	}
 	
-	
-	public J12_User changePass(String pass) {
-		
-		J12_User user = null;
-		
-		for(J12_User u : userTable) {
-			if(u == null) {
-				continue;
-			}
-			if(u.getPassword().equals(pass)){
-				user = u;
-				break;
-			}
-		}
-		return user;	
-	}
-	
 //	@Override
 //	public String toString() {
 //		return Arrays.toString(userTable);

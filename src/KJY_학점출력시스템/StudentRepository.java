@@ -19,7 +19,7 @@ public class StudentRepository {
 		addArray();
 		//int[0] = {5}; 얘랑같은형태임
 		student[student.length -1] = s1; //index는 0부터 시작하기에 -1 을 안해주면 index 0번이 날아감.
-		//oldArray에 Student타입의 ss를 넣겠다.
+	
 	}
 	
 	//얘랑 addArray랑 같은놈임
@@ -39,7 +39,7 @@ public class StudentRepository {
 	//oldArray 에 newArray값을 넣음
 	public void transferArray(Student[] oldArray, Student[] newArray) {
 		for(int i = 0; i < oldArray.length; i++) {
-			oldArray[i] = newArray[i];
+			newArray[i] = oldArray[i];
 		}
 	}
 

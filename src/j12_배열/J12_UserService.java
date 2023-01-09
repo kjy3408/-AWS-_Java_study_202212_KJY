@@ -80,38 +80,6 @@ public class J12_UserService {
 	}
 	
 	
-	private void userFind() {
-		J12_User[] use = userRepository.getUserTable();
-		
-		System.out.println("찾으시는 회원 이름 : ");
-		J12_User users = userRepository.findUserByUsername(scanner.nextLine());
-		
-		if(use[0].equals(users)) {
-			System.out.println(users.toString());
-		}else {
-			System.out.println("찾는사람없음");
-		}
-		
-		
-		
-	}
-	
-	private void changeInfo() {
-		J12_User[] use = userRepository.getUserTable();
-		
-		System.out.println("========<< 회원 정보 수정 >>========");
-		System.out.println("1. 회원 비밀번호 변경: ");
-		J12_User user = userRepository.changePass(scanner.nextLine());
-		if(use[1].equals(user)) {
-			System.out.println("비번같음");
-		}else {
-			use[1] = user;
-		}
-//		System.out.println("2. 회원 이름 변경: ");
-//		System.out.println("3. 회원 이메일 변경: ");
-			
-	}
-	
 	
 	
 	
@@ -135,8 +103,6 @@ public class J12_UserService {
 		user.setEmail(scanner.nextLine());
 		
 		userRepository.saveUser(user);//얘안하면 값 저장안됨							//각각의 값을 입력받고 userRepository에 저장하는 메소드
-
-		
 	}
 	
 	/*
@@ -150,12 +116,135 @@ public class J12_UserService {
 	 * 	b. 뒤로가기....(while문 종료)
 	 * 
 	 * */
-	private void noFound() {///
-		System.out.println("찾으시는 회원 없음");
+	
+//=========================회원정보수정 ~ 변경=========================================================
+//=========================회원정보수정 ~ 변경=========================================================
+	//조회할때 보여지는화면
+	private void showUser() {
+		J12_User user = null;
+		
+		System.out.println("========<< 회원 조회>>========");
+		user = verifyUsername();
+		
+		if(user == null) {
+			System.out.println("존재하지 않는 사용자이름입니다.");
+			return;//if문이 실패사례일때 return걸어주는게 좋음
+		}
+		
+		System.out.println(user.toString());
+		System.out.println("==================================");
+	}
+	
+	//조회할 정보 입력
+	private J12_User verifyUsername() {
+		String username = null;
+		System.out.println("사용자이름: ");
+		username = scanner.nextLine();
+		return userRepository.findUserByUsername(username);
 	}
 	
 	
+	
+	private void updateUser() {
+		J12_User user = verifyUsername();
+		if(user == null) {
+			System.out.println("존재하지 않는 사용자입니다.");
+			return;
+		}
+		
+		boolean loopFlag = true;
+		char select = '\0';
+				
+		while(loopFlag) {
+			showUpdateMenu(user);
+			select = inputSelect("수정");
+			loopFlag = updataMenu(user, select);
+					
+		}
+	}
+	
+	
+	
+	private void showUpdateMenu(J12_User user) {
+		System.out.println("========<< 수정 메뉴>>========");
+		System.out.println("사용자이름 : " + user.getUsername());
+		System.out.println("1. 비밀번호 변경");
+		System.out.println("2. 이름 변경");
+		System.out.println("3. 이메일 변경");
+		System.out.println("==============================");
+		System.out.println("b. 뒤로가기");
+		System.out.println();
+	}
+	
+	
+	
+	private void updatePassword(J12_User user) {
+		String oldPassword = null;
+		String newPassword = null;
+		String confirmPassword= null;
+		
+		System.out.println("========<< 비밀번호 변경>>========");
+		
+		System.out.println("기존 비밀번호 입력: ");
+		oldPassword = scanner.nextLine();
+		
+		if(!comparePassword(user.getPassword(), oldPassword)) {
+			System.out.println("비밀번호가 일치하지 않습니다");
+			return;
+		}
+		
+		System.out.println("새로운 비밀번호 입력: ");
+		newPassword = scanner.nextLine();
+		System.out.println("새로운 비밀번호 확인: ");
+		confirmPassword = scanner.nextLine();
+		
+		if(!comparePassword(newPassword, confirmPassword)) {
+			System.out.println("새로운 비밀번호가 서로 일치하지 않습니다.");
+			return;
+		}
+	}
+	
+	
+	
+	private boolean comparePassword(String prePassword, String nextPassword) {
+		return prePassword.equals(nextPassword);
+	}
+	
+	
+	private boolean updataMenu(J12_User user, char select) {
+		boolean flag = true;
+		
+		if(isBack(select)) {
+			flag = false;
+			
+		}else {
+			if(select == '1') {
+				updatePassword(user);
+			}else if(select == '2') {
+				
+			}else if(select == '3') {
+				
+			}else {		
+				System.out.println(getSelectedErrorMessage());
+			}
+		}
+		System.out.println();
+		
+		return flag;
+	}
+	
+	
+	private boolean isBack(char select) {
+		return select == 'b'|| select == 'B';
+	}
 
+	
+
+	
+//=========================회원정보수정 ~ 변경=========================================================
+//=========================회원정보수정 ~ 변경=========================================================
+	
+	
 	private boolean mainMenu(char select) {												//mainMenu메소드에 입력받은 select값을 매개값으로 넣어줌.
 		boolean flag = true;															//변수 flag를 true로 선언
 		
@@ -169,9 +258,9 @@ public class J12_UserService {
 			}else if(select == '2') {
 				registerUser();
 			}else if(select == '3') {
-				userFind();
+				showUser();
 			}else if(select == '4') {
-				changeInfo();
+				
 			}else {																		//해당하는 번호가 없다면 getSelectedErrorMessage()메소드 실행
 				System.out.println(getSelectedErrorMessage());
 			}
