@@ -1,4 +1,4 @@
-package j10_생성자;
+package J10_생성자;
 
 public class J10_StudentMain {
 	public static void main(String[] args) {

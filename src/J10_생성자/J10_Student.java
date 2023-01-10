@@ -1,4 +1,4 @@
-package j10_생성자;
+package J10_생성자;
 
 public class J10_Student {
 //기본생성자는 생략되어있다. 만약 생성자의 오버로딩이 일어나면 기본생성자는 비활성화된다.
