@@ -23,8 +23,13 @@ public class Array1 {
 		nums[3] = 40;
 		nums[4] = 50;
 		
-		for(int i = 0; i < nums.length; i++) {
+		for(int i = 0; i < 10; i++) {
 			System.out.println(nums[i]);
 		}
+	
+		
+		
+	
+		
 	}
 }

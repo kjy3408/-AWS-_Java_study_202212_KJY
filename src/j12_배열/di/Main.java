@@ -17,6 +17,7 @@ public class Main {
 		ta.testA1();
 		ta.testA2();
 		
+		
 	
 		
 		//B를 A에 줄수 있는 방법 : 생성자 매개변수로 줄 수있는 방법

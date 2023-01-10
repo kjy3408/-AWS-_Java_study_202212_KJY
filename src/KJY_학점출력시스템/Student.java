@@ -30,7 +30,7 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "입력하신 성함 : " + name + ", "+ "입력하신 점수 : " + score;
+		return "입력하신 성함 : " + name + ", "+ "입력하신 점수 : " + score + "\n";
 	}
 	
 }

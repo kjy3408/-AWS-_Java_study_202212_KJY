@@ -20,7 +20,10 @@ public class J11_StudentMain {
 		System.out.println("이름: " + s2.getName());//getName()(은행원)에게 s2.name(금고에 있는 돈)을 꺼내 줌.
 		//내부 정보는 항상 메소드를 통해서만 가지고 와야한다.
 		
-		
+		s1.setAge(365);
+
+		s1.printInfo();
+		System.out.println("===== Getter / Setter 사용하여 멤버변수 값 변경====");
 	}
 
 }
