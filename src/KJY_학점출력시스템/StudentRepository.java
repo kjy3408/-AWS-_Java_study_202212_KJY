@@ -23,21 +23,21 @@ public class StudentRepository {
 	}
 	
 	//얘랑 addArray랑 같은놈임
-	public Student[] extendArray(int length) {
+	private Student[] extendArray(int length) {
 		Student[] newArray = new Student[student.length + length]; 
 		transferArray(student, newArray);
 		return newArray;
 	}
 	
 	//배열 길이를 하나 늘림. oldArray[1] = {5}  / newArray[oldArray.length + 1] = {"",""}; newArray를 넣게되면 5가 사라짐...
-	public void addArray() {
+	private void addArray() {
 		Student[] newArray = new Student[student.length + 1];//newArray의 배열크기를 oldArray보다 1크게함. 추가적으로 값이 계속 들어가야하기에.
 		transferArray(student, newArray);
 		student = newArray; // oldArray에 newArray값을 넣음.
 	}
 	
 	//oldArray 에 newArray값을 넣음
-	public void transferArray(Student[] oldArray, Student[] newArray) {
+	private void transferArray(Student[] oldArray, Student[] newArray) {
 		for(int i = 0; i < oldArray.length; i++) {
 			newArray[i] = oldArray[i];
 		}

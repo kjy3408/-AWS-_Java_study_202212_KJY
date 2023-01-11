@@ -36,7 +36,7 @@ public class StudentService {
 	}
 	
 	
-	public void showView() {
+	private void showView() {
 		System.out.println("=====학점 출력 시스템=====");
 		System.out.println("1. 학생 정보 입력");
 		System.out.println("2. 입력 정보 출력");
@@ -49,7 +49,7 @@ public class StudentService {
 	}
 	
 	
-	public char inputSelected() {
+	private char inputSelected() {
 		System.out.print("원하는 메뉴를 선택하세요 : ");
 		char select = scanner.next().charAt(0);
 		scanner.nextLine();
@@ -59,7 +59,7 @@ public class StudentService {
 
 	
 	
-	public boolean Exit(char select) {
+	private boolean Exit(char select) {
 		return select == 'q' || select == 'Q';
 	}
 
@@ -88,7 +88,7 @@ public class StudentService {
 
 
 	
-	public void registerStudent() {
+	private void registerStudent() {
 		System.out.print("이름 입력 : ");
 		name = scanner.nextLine();
 		System.out.print("점수 입력 : ");
