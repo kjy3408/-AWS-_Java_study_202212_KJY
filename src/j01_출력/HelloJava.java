@@ -9,6 +9,8 @@ package j01_출력;
   3
  */
 
+import j17_스태틱.싱글톤.KIA;
+
 /** (별별엔터 파란색 주석)
  *  클래스, 메소드 등의 정보를 설명하기 위한 주석
  * 
@@ -30,6 +32,8 @@ public class HelloJava { //class명은 전부 대문자로 시작
 		 *
 		 */
 	
+		System.out.println();
+		KIA.getInstance().printCompanyName();
 	}
 }
 
