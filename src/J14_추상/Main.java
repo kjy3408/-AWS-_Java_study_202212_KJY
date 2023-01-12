@@ -10,6 +10,17 @@ public class Main {
 		
 		Airplane airplane = new Airplane();
 		
+		Taxi taxi = new Taxi();
+		
+		taxi.go();
+		taxi.stop();
+		taxi.checkTaxiNumber();
+		
+		System.out.println();
+		
+		transportation.go();
+		transportation.stop();
+		
 		
 		
 	}

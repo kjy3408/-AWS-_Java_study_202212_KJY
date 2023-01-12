@@ -19,7 +19,7 @@ public class Main {
 //
 //		view.show(); //UpdateView에서 오버라이딩 한 메소드 출력
 //		
-	
+		
 		Controller controller = new Controller(new MainView());
 		controller.run();
 		

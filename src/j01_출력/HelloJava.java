@@ -34,6 +34,8 @@ public class HelloJava { //class명은 전부 대문자로 시작
 	
 		System.out.println();
 		KIA.getInstance().printCompanyName();
+		
+		System.out.println(10/0);
 	}
 }
 

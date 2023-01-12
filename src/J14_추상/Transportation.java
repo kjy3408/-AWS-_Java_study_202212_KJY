@@ -5,6 +5,7 @@ public abstract class Transportation {
 
 	
 	
+	
 	public abstract void go();//추상메소드 => 중괄호가 없다 => 실행할 명령이 없다 => 니가 구현해라
 	
 	public abstract void stop(); 

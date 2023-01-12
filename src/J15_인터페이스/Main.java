@@ -11,7 +11,7 @@ public class Main {
 		equipments[1] = new SmartPhone(); //Equipment
 	
 		
-		Calculator calculator = new Computer(); //Calculator 구현
+//		Calculator calculator = new Computer(); //Calculator 구현
 		
 		//==============================================================
 		System.out.println("모든 장비 전원 켜기");
@@ -29,7 +29,7 @@ public class Main {
 		for(Equipment eq : equipments) {
 			Calculator c = (Calculator) eq; //eq는 GeneralCalculator과  SmartPhone이 들어가있기에 바로 다운캐스팅 가능.
 			double result = c.plus(10, 20);
-			System.out.println("결과: " + result);
+			System.out.println("결과ㄹㄹㄹㄹ: " + result);
 	
 		}
 		
@@ -42,7 +42,7 @@ public class Main {
 		
 		for(Equipment eq : equipments) {
 			Calculator c = (Calculator) eq; //eq는 GeneralCalculator과  SmartPhone이 들어가있기에 바로 다운캐스팅 가능.
-			double result = c.division(10, 2);
+			double result = c.division(10, 0);
 			System.out.println("결과: " + result);
 		}
 		
