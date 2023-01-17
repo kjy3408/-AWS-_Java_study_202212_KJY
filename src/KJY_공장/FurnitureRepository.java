@@ -5,8 +5,11 @@ import java.util.Map;
 
 public class FurnitureRepository {
 	Map<String, String> fmap = new HashMap<>();
-	
 	Furniture f;
+	
+
+	
+	
 	
 	
 	

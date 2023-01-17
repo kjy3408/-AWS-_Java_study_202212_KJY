@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class User {
 
 	private String userName;
@@ -11,7 +12,5 @@ public class User {
 	private String name;
 	private String email;
 	
-	public User(String user) {
-		this.userName = user;
-	}
+	
 }

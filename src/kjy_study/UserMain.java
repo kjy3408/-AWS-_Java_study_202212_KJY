@@ -10,42 +10,20 @@ import java.util.Set;
 public class UserMain {
 
 	public static void main(String[] args) {
-//		User u = new User();
-		
-		List<User> usersList = new ArrayList<>();
-		
-		Set<Object> usersSet = new HashSet<>();
-		
-		Map<String, Object> usersMap = new HashMap<>();
-//		usersMap1.put("김똥개", "23");
-//		
-//		Map<Object, Map<String, Object>> userMap = new HashMap<>();
-//		
-//		userMap.put(usersList, usersMap1); 
-//	
-//		usersList.add("더럽다");
-//		usersSet.add("A");
-//		
-//		System.out.println(userMap);
-	
-		usersList.add(new User("김고양이"));
-		usersList.add(new User("김고양이"));
-		usersList.add(new User("김고양이"));
-		usersList.add(new User("김고양이"));
-		usersList.add(new User("김똥개"));
-		usersList.add(new User("김고양이"));
-		usersList.add(new User("김고양이"));
 
 		
-		String searchName = "김똥개";
 		
-		for(int i = 0; i < usersList.size(); i++) {
-			if(usersList.get(i).getUserName().equals(searchName)) {
-				System.out.println(usersList.get(i));
-				break;
-			}
-		}
+		List<User> list = new ArrayList<>();
 		
+		list.add(new User("aaa", "1234", "김똥개", "aaa@bbb"));
+		list.add(new User("bbb", "12123534", "김똥개", "aaa@bbb"));
+		list.add(new User("ccc", "12312534", "김똥개", "aaa@bbb"));
+		list.add(new User("ddd", "1231234", "김똥개", "aaa@bbb"));
+		list.add(new User("eee", "12344", "김똥개", "aaa@bbb"));
+		
+		UserService userService = new UserService();
+		
+		userService.inputUsername();
 		
 		
 	
