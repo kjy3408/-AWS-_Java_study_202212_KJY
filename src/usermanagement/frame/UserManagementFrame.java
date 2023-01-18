@@ -6,7 +6,6 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -109,11 +108,24 @@ public class UserManagementFrame extends JFrame {
 		
 		JButton loginButton = new JButton("Login");
 		
-		
 		loginButton.addMouseListener(new MouseAdapter() {//interface에서 구현해야하는 메소드들을 Adapter class에서 실행문을 비워놓은 채로 미리 구현해놓고, Adapter class를 참조하여 원하는 메소드만 사용가능.
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				JsonObject loginUser = new JsonObject();
+				loginUser.addProperty("usernameAndEmail", usernamefield.getText());
+				loginUser.addProperty("password", passwordField.getText());
+			
+				UserService userService = UserService.getInstance();
 				
+				Map<String, String> response = userService.authorize(loginUser.toString());
+				
+				if(response.containsKey("error")) {
+					JOptionPane.showMessageDialog(null, response.get("error"), "error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+					JOptionPane.showMessageDialog(null, response.get("ok"), "Welcom", JOptionPane.INFORMATION_MESSAGE);
+					
 			}
 		});
 		

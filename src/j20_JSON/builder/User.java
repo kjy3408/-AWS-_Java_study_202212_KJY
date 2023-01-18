@@ -21,7 +21,7 @@ public class User {
 //	public static class UserBuilder{ //static 없이 쓰면 내부 class라고 한다.
 //		private String username;
 //		private String password;
-//		private String name;
+//		private String name; 
 //		private String email;
 //		
 //		public UserBuilder username(String username) {
