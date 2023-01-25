@@ -48,8 +48,6 @@ select * from author_mst;
 /*김주로 검색했을때 도서명이 나와야됨.*/ 
 
 
-
-
 select * from library_mst;
 
 select
@@ -71,7 +69,8 @@ set profiling_history_size = 30;
 
 select
 	도서관명,
-    도서명
+    도서명,
+    저작자
 from
 	library_mst
 where
@@ -82,6 +81,8 @@ where
 			where
 				author_name like '%김주%'
 			or author_name like '%김민%'); /*in속에 like가 두개 (or 사용)*/
+            
+            
             
             
 select/*위와 같은 내용*/
