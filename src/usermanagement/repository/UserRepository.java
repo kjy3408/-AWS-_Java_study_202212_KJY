@@ -17,9 +17,9 @@ import usermanagement.entity.User;
  */
 public class UserRepository {
 	
-	private DBConnectionMgr pool;
+	private DBConnectionMgr pool;															//DBConnectionMgr 선언
 	
-	private static UserRepository instance;
+	private static UserRepository instance;													//UserRepository를 싱글톤으로 선언.
 	
 	public static UserRepository getInstance() {
 		if(instance == null) {
@@ -28,14 +28,14 @@ public class UserRepository {
 		return instance;
 	}
 	
-	private UserRepository() {
+	private UserRepository() {																//UserRepository싱글톤 생성(getInstnace 호출)시 DBConnectionMgr 싱글톤도 생성
 		pool = DBConnectionMgr.getInstance();
 	}
 	
 //========UserRepository 기본틀==================
 	//Create 리턴은 int
 	
-	public int saveUser(User user) {
+	public int saveUser(User user) {														
 		int successCount = 0;
 	
 		String sql = null;
@@ -46,7 +46,7 @@ public class UserRepository {
 		try {
 			con = pool.getConnection();		//연결
 			sql = "INSERT INTO user_mst VALUES (0, ?, ?, ?, ?)";
-			pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);					//AI Key값이 뭔지 모르기에 해당하는 Key를 받아온다.
 			
 			pstmt.setString(1, user.getUsername()); //값 저장.
 			pstmt.setString(2, user.getPassword());
@@ -55,9 +55,9 @@ public class UserRepository {
 			
 			successCount = pstmt.executeUpdate();
 			
-			rs = pstmt.getGeneratedKeys();
+			rs = pstmt.getGeneratedKeys();														//받아온 Key값을 rs에 넣어줌.
 			
-			if(rs.next()) {
+			if(rs.next()) {																		//Key값이 저장되어있는 변수 rs가 
 				user.setUserId(rs.getInt(1));
 			}
 			
