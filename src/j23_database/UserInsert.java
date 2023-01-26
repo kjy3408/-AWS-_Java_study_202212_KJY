@@ -22,17 +22,17 @@ public class UserInsert {
 	
 	public int saveUser(User user) {
 		int successCount = 0;
-//		DBConnectionMgr pool = DBConnectionMgr.getInstance(); //싱글톤 호출(생성) [전역으로 뺌]
+
 		String sql = null;
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null; 
 		ResultSet resultSet = null;
 		
-		try {//throws때문에 여기서 예외처리 해줌
-			connection = pool.getConnection(); //db랑 연결.(쿼리를 실행할때마다 연결해줘야함)
+		try {										 //throws때문에 여기서 예외처리 해줌
+			connection = pool.getConnection();		 //db랑 연결.(쿼리를 실행할때마다 연결해줘야함)
 			
-			sql = "insert into user_mst\r\n" 
-					+ "values (0, ?, ?, ?, ?)";
+			sql = "INSERT INTO user_mst\r\n" 
+					+ "VALUES (0, ?, ?, ?, ?)";
 			
 			preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
@@ -57,6 +57,7 @@ public class UserInsert {
 		return successCount;                                                                                                                                     
 	}
 	
+	
 	public int saveRoles(Map<String, Object> map) {
 		int successCount = 0;
 		
@@ -65,14 +66,16 @@ public class UserInsert {
 		PreparedStatement preparedStatement = null;
 		
 		try {
+			
 			connection = pool.getConnection();
+			
 			List<Integer> roles = (List<Integer>) map.get("roles");
+			
 			User user = (User) map.get("user");
 						
 			sql = "insert into role_dtl values";
 			
-			for(int i = 0; i <roles.size(); i++) {
-				
+			for(int i = 0; i <roles.size(); i++) {				
 				sql += "(0, ?, ?)";
 				
 				if(i < roles.size() - 1) {
@@ -82,7 +85,7 @@ public class UserInsert {
 					
 			preparedStatement = connection.prepareStatement(sql);
 			
-			for(int i = 0; i < roles.size(); i++) {
+			for(int i = 0; i < roles.size(); i++) {				
 				preparedStatement.setInt((i*2) + 1, roles.get(i));
 				preparedStatement.setInt((i*2) + 2, user.getUserId());
 			}

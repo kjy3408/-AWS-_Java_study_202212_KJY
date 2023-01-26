@@ -9,6 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import usermanagement.entity.RoleDtl;
 import usermanagement.entity.User;
 import usermanagement.repository.UserRepository;
 
@@ -18,6 +19,7 @@ public class UserService {
 	private Gson gson;
 	private static UserService instance;
 	
+	
 	public static UserService getInstance() {
 		if(instance == null) {
 			instance = new UserService();
@@ -25,10 +27,12 @@ public class UserService {
 		return instance;
 	}
 	
+	
 	private UserService() {
 		userRepository = UserRepository.getInstance();
 		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
+	
 	
 	public Map<String, String> register(String userJson) {
 		//response 응답.
@@ -36,9 +40,10 @@ public class UserService {
 		Map<String, String> response = new HashMap<>();
 		
 		Map<String, String> userMap = gson.fromJson(userJson, Map.class);
-		for(Entry<String, String> userEntry : userMap.entrySet()) {//하나의 Key + Value를 묶어서 Entry라고한다.
+	
+		for(Entry<String, String> userEntry : userMap.entrySet()) {									//하나의 Key + Value를 묶어서 Entry라고한다.
 			
-			if(userEntry.getValue().isBlank()) {
+			if(userEntry.getValue().isBlank()) {													//아무값도 넣지않았을때 작동
 				response.put("error", userEntry.getKey() + "은(는) 공백일 수 없습니다.");
 				return response;
 			}
@@ -63,23 +68,33 @@ public class UserService {
 		System.out.println(user);
 		
 		userRepository.saveUser(user);
-				
+		
+		RoleDtl roleDtl = RoleDtl.builder()
+				.roleId(3)
+				.userId(user.getUserId())
+				.build();
+		
+		userRepository.saveRoleDtl(roleDtl);
+		
 		response.put("ok", "회원가입 성공.");
 		
 		return response;
 	}
 	
+	
 	private boolean duplicatedUsername(String username) {
 		return userRepository.findUserByUsername(username) != null; //null이면 ID사용가능, null 아닐 시 사용불가.
 	}
+	
 	
 	private boolean duplicatedEmail(String email) {
 		return userRepository.findUserByEmail(email) != null; //null이면 ID사용가능, null 아닐 시 사용불가.
 	}
 	
+	
 	public Map<String, String> authorize(String loginUserJson) {
-		Map<String, String> loginUser = gson.fromJson(loginUserJson, Map.class);
 		
+		Map<String, String> loginUser = gson.fromJson(loginUserJson, Map.class);
 		Map<String, String> response = new HashMap<>();
 		
 		for(Entry<String, String> entry : loginUser.entrySet()) {
@@ -89,7 +104,9 @@ public class UserService {
 			}
 		}
 		
+		
 		String usernameAndEmail = loginUser.get("usernameAndEmail");
+		
 		
 		User user = userRepository.findUserByUsername(loginUser.get("usernameAndEmail"));
 		if(user == null) {
@@ -100,10 +117,12 @@ public class UserService {
 			}
 		}
 		
+		
 		if(!BCrypt.checkpw(loginUser.get("password"), user.getPassword())) {
 			response.put("error", "사용자 정보를 확인해주세요.");
 			return response;
 		}
+		
 		
 		response.put("ok", user.getName() + "님 환영합니다.");
 		return response;
