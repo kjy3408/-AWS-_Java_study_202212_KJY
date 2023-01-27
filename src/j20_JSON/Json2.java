@@ -21,8 +21,6 @@ public class Json2 {
 		String mapJson = gson.toJson(map);
 		
 		System.out.println(mapJson);
-
-
 	}
 
 }

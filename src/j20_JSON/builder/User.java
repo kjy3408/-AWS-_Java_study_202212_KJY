@@ -16,7 +16,7 @@ public class User {
 		return new UserBuilder(); 								//return이 new UserBuilder(); 이라 메소드 호출 하면 UserBuilder생성됨
 	}
 	
-	@Data	//static class 
+		//static class 
 	public static class UserBuilder{ //static 없이 쓰면 내부 class라고 한다.
 		private String username;
 		private String password;

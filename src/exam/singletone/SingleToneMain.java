@@ -4,8 +4,7 @@ public class SingleToneMain {
 
 	public static void main(String[] args) {
 		
-		System.out.println(SingleTone.getInstnace().method());
-		
+		System.out.println(SingleTone.getInstnace());
 		
 	}
 }
