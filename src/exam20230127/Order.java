@@ -7,7 +7,7 @@ public class Order {
 	private int price;
 	private int stock;
 	
-	public Order(int orderId, String productName, String consumerName, int price, int stock) {
+	public Order(int orderId, String productName, String consumerName, int price, int stock) { //전체생성자 필수.
 		this.orderId = orderId;
 		this.productName = productName;
 		this.consumerName = consumerName;
@@ -19,38 +19,18 @@ public class Order {
 		System.out.println(toString());
 	}
 	
-	public int getOrderId() {
-		return orderId;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public String getConsumerName() {
-		return consumerName;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public int getStock() {
-		return stock;
-	}
-
 	public static OrderBuilder builder() {
 		return new OrderBuilder();
 	}
 	
-	public static class OrderBuilder {
+	public static class OrderBuilder {															//Order와 똑같은 멤버변수를 갖는다.
 		private int orderId;
 		private String productName;
 		private String consumerName;
 		private int price;
 		private int stock;
 		
-		public OrderBuilder orderId(int orderId) {
+		public OrderBuilder orderId(int orderId) {												
 			this.orderId = orderId;
 			return this;
 		}
@@ -75,8 +55,8 @@ public class Order {
 			return this;
 		}
 		
-		public Order build() {
-			return new Order(orderId, productName, consumerName, price, stock);
+		public Order build() {																	// 최종적으로 Order를 생성자를 리턴(Order class 생성)해주는 메소드가 필수로 필요.
+			return new Order(orderId, productName, consumerName, price, stock);					//OrderBuilder class에 있는 멤버변수들을 가지고 생성함.
 		}
 	
 	}

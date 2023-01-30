@@ -11,7 +11,7 @@ public class SubjectService {
 	
 	public void showSubjects() {
 		int length = 4;
-		for(int i = 0; i < subjects.size(); i++) {
+		for(int i = 0; i < length; i++) {
 			System.out.println(subjects.get(i));
 		}
 	}

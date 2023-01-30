@@ -1,4 +1,5 @@
 package exam20230127;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -13,6 +14,7 @@ public class Main {
 				.stock(2).build();	
 		
 		order.showOrderInfo();
+		
 		
 		
 	}

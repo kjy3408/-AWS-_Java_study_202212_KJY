@@ -22,6 +22,7 @@ public class MapList {
 		List<Map<String, Object>> customers = new ArrayList<Map<String, Object>>();
 		customers.add(map);
 		customers.add(map1);
+		
 		for(Map<String, Object> customer : customers) {
 			System.out.println(customer);
 			

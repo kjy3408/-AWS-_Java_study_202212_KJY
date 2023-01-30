@@ -19,9 +19,13 @@ public class Main {
 			}
 		};
 		
-		
 		System.out.println(c2.calc(20, 10)); 
 		
+
+		
+		Calculator c3 = (x, y) -> x * y; //람다
+
+		System.out.println(c3.calc(20, 30));
 		
 		
 		
