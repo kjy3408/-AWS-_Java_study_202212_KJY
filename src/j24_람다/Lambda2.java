@@ -1,6 +1,5 @@
 package j24_람다;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -9,7 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Lambda2 {
 
@@ -96,7 +99,6 @@ public class Lambda2 {
 		
 		
 		
-		int num = 90;
 		
 		//위처럼 쓰지 않으면 이렇게 써야됨. (entry로 변환하여 하나씩 꺼내줘야함)
 		for(Entry<String, String> entry : userMap.entrySet()) {
@@ -107,37 +109,48 @@ public class Lambda2 {
 		
 		System.out.println("========================");
 		
-		Map<String, Integer> map1 = new HashMap<>();
-		map1.put("1", 1);
-		map1.put("2", 2);
-		map1.put("3", 3);
+		//4. Function<T, R> - 매개변수 O , 반환 O
 		
+		Function<String, Integer> i = num -> Integer.parseInt(num); //integer type으로 바꿔줌.
 		
-		List<String> list = new ArrayList<>();
+		int convertStrNum1 = i.apply("10000");
+		int convertStrNum2 = i.apply("20000");
 		
-		map1.forEach((num1, number ) -> {
-			System.out.println(num1);
-			System.out.println(number);
-			
-			list.add(num1);
-			
-		});
-		System.out.println("dd"+list);
+		System.out.println(convertStrNum1 + convertStrNum2);
 		
+		System.out.println();
 		
-//		System.out.println();
-//		for(Entry<String, Integer> entry : map1.entrySet()) {
-//			System.out.println(num= 100);
-//		
-//			System.out.println(entry.getKey());
-//			System.out.println(entry.getValue());
-//		}
+		//5. Predicata<T> - 매개변수 O , 반환 O  - true/false 리턴. (boolean type)
+		Predicate<String> j = str -> str.startsWith("김"); //문자열 시작이 "김"이다.
+		Predicate<String> j2 = str -> str.startsWith("이");
+
+		System.out.println(j2.test("이준일") || j.test("김준일")); 
+		System.out.println(j.or(j2).test("김준일"));
 		
+		Function<Predicate<String>, Boolean> function1 = predicate -> predicate.or(str -> str.startsWith("이")).test("김준일");
 		
+		boolean rs = function1.apply(str -> str.startsWith("김"));//람다를 직접넣음
+		System.out.println(rs);
 		
+		List<String> nameList = new ArrayList<>();
+		nameList.add("김종환");
+		nameList.add("고병수");
+		nameList.add("김상현");
+		nameList.add("김준경");
 		
-	
-	
+		// Stream => 일회용이라 forEach를 돌린 후 또 출력하게되면 java.lang.IllegalStateException 발생
+		Stream<String> stream = nameList.stream().filter(name -> name.startsWith("김")); //list를 stream으로 바꾸고 필터 걸어줌. 필터에 해당하는 데이터만 아래 forEach에서 출력됨.
+//		stream.forEach(name -> System.out.println(name));
+		List<String> newList = stream.collect(Collectors.toList()); //stream을 list로 바꿔줌.
+		
+		newList.forEach(str -> System.out.println(str));
+		
+		System.out.println("================위를 한줄로===================");
+		
+		nameList.stream()
+			.filter(name -> name.startsWith("김"))			
+			.collect(Collectors.toList())
+			.forEach(name -> System.out.println(name)/*System.out::println*/);
 	}
 	
 }
