@@ -1,0 +1,1 @@
+SELECT * FROM db_study3.publisher_mst;

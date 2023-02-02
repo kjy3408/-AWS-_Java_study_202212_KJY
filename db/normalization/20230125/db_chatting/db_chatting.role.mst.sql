@@ -1,0 +1,1 @@
+SELECT * FROM chatting.role_mst;

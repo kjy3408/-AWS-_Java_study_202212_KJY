@@ -1,0 +1,1 @@
+SELECT * FROM chatting.user_dtl;
