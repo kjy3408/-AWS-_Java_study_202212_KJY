@@ -10,12 +10,14 @@ public class Casting {
 		
 			
 		for(int i = 0; i < 4; i++) {
-			Java j = (Java) programs[0];
-			C c = (C) programs[1];
-			j.develop();
-			j.garbageCollection();
-			c.develop();
-			c.defineStructure();
+		
 		}
+		
+		Java j = (Java) programs[0];
+		C c = (C) programs[1];
+		j.develop();
+		j.garbageCollection();
+		c.develop();
+		c.defineStructure();
 	}
 }

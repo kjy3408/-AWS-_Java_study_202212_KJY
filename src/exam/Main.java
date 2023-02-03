@@ -1,27 +1,21 @@
 package exam;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
-
 	public static void main(String[] args) {
-	
-		int count = 0;
 		
-		for(int i = 2; i <= 100; i++) {
-			for(int j = 2; j <= i; j++) {
-				if(i % j == 0) {
-					count++;
-				}
-			}
+		ArrayList<Integer> numbers = new ArrayList<>();
+		numbers.add(1);
+		numbers.add(2);
+		numbers.add(3);
 		
-		
-		if(count == 1) {
-			System.out.println(i+ "");
+		for(int i = 0; i < numbers.size(); i++) {
+			System.out.println(numbers.get(i));
 		}
-		count = 0;
-		}
-	
+		
+		
+		System.out.println(numbers.contains(1));
 		
 	}
 }
