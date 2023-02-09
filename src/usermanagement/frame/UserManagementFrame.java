@@ -285,25 +285,23 @@ public class UserManagementFrame extends JFrame {
 					String response = reader.readLine();
 					System.out.println("응답 옴!");
 					ResponseDto<?> responseDto = gson.fromJson(response, ResponseDto.class);
-					System.out.println(responseDto);
+					
+					if(responseDto.getCode().equals("error")) {
+						JOptionPane.showMessageDialog(null, responseDto.getBody(), responseDto.getCode(), JOptionPane.ERROR_MESSAGE); //error메세지 띄우는 기능.
+						return;
+					}
+					
+					JOptionPane.showMessageDialog(null, responseDto.getBody(), responseDto.getCode(), JOptionPane.INFORMATION_MESSAGE);
+					mainCard.show(mainPanel, "loginPanel");
+					clearFields(registerFields); //화면 전환 일어날때마다 해줘야함.
+					
+					System.out.println(responseDto);  //없어도됨
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-								
-//				UserService userService = UserService.getInstance();
-//				
-//				Map<String, String>	response = userService.register(userJson.toString());
-//				
-//				if(response.containsKey("error")) {
-//					JOptionPane.showMessageDialog(null, response.get("error"), "error", JOptionPane.ERROR_MESSAGE); //error메세지 띄우는 기능.
-//					return;
-//				}
-//				
-//				JOptionPane.showMessageDialog(null, response.get("ok"), "ok", JOptionPane.INFORMATION_MESSAGE);
-//				mainCard.show(mainPanel, "loginPanel");
-//				clearFields(registerFields); //화면 전환 일어날때마다 해줘야함.
 			}
 		});
+		
 		registerButton.setFont(new Font("D2Coding", Font.BOLD, 15));
 		registerButton.setBounds(53, 373, 285, 37);
 		registerPanel.add(registerButton);

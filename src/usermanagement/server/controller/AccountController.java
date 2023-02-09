@@ -1,25 +1,36 @@
 package usermanagement.server.controller;
 
+import java.util.Map;
+
 import usermanagement.dto.ResponseDto;
-import usermanagement.entity.User;
+import usermanagement.service.UserService;
 
 public class AccountController {
 
 	private static AccountController instance;
+	private UserService userService;
 	
-	private AccountController() {}
+	private AccountController() {
+		userService = UserService.getInstance();
+	}
 	
-	public static AccountController getInstance() { //controller를 누군가 사용하고있다면 다른사람은 접근하지 못하게 막는다.(스레드를 쓰는 환경에선 synchronized를 꼭 해줘야함.
+	public static AccountController getInstance() { 
 		if(instance == null) {
 			instance = new AccountController();
 		}
 		return instance;
 	}
 	
-	public ResponseDto<?> register(User user) {
-
-		return new ResponseDto<String>("ok", "회원가입 성공");
-	}
 	
+	public ResponseDto<?> register(String userJson) {
+		
+		Map<String, String> resultMap = userService.register(userJson);
+		
+		if(resultMap.containsKey("error")) {
+			return new ResponseDto<String>("error", resultMap.get("error"));
+		}
+		
+		return new ResponseDto<String>("ok", resultMap.get("ok"));
+	}
 	
 }
