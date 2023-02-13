@@ -19,6 +19,7 @@ import lombok.Data;
 @Data //socket이랑 username getter/setter
 class ConnectedSocket extends Thread{
 	public static List<ConnectedSocket> socketList = new ArrayList<>();
+	
 	private Socket socket;
 	private InputStream inputStream;
 	private OutputStream outputStream;
@@ -86,7 +87,7 @@ public class ServerApplication {
 						
 			while(true) {
 				Socket socket = serverSocket.accept();									
-				ConnectedSocket connectedSocket = new ConnectedSocket(socket);
+				ConnectedSocket connectedSocket = new ConnectedSocket(socket);			//스레드
 				connectedSocket.start();						
 			}
 		
