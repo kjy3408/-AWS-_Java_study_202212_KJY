@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketException;
 
 import com.google.gson.Gson;
 
@@ -35,12 +36,15 @@ public class ClientRecive extends Thread{
 						JoinRespDto joinRespDto = gson.fromJson(responseDto.getBody(), JoinRespDto.class);
 						ChattingClient.getInstance().getContentView().append(joinRespDto.getWelcomeMessage() + "\n");
 						ChattingClient.getInstance().getUserListModel().clear();
+						ChattingClient.getInstance().getUserListModel().addElement("--- 전체 ---");
 						ChattingClient.getInstance().getUserListModel().addAll(joinRespDto.getConnectedUsers());;
+						ChattingClient.getInstance().getUserList().setSelectedIndex(0);//"---전체---가 항상 첫번째에 select되어있음.
 						break;
 					case "sendMessage" :
 						MessageRespDto messageRespDto = gson.fromJson(responseDto.getBody(), MessageRespDto.class);
 						ChattingClient.getInstance().getContentView().append(messageRespDto.getMessageValue() + "\n");
 				}
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

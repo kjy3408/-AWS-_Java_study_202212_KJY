@@ -1,5 +1,6 @@
 package simplechatting2.client;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -50,7 +51,7 @@ public class ChattingClient extends JFrame {
 	private JTextField portInput;
 	private JTextArea contentView;
 	private JTextField messageInput;
-	private JList userList;
+	private JList<String> userList;
 	private DefaultListModel<String> userListModel;
 
 	public static void main(String[] args) {
@@ -84,37 +85,16 @@ public class ChattingClient extends JFrame {
 		contentPane.add(ipInput);
 		ipInput.setColumns(10);
 		
-		JButton connect = new JButton("연결");
-		connect.addMouseListener(new MouseAdapter() {
+		
+		JButton connectButton = new JButton("연결"); //변수 전역으로 뺌
+		connectButton.addMouseListener(new MouseAdapter() {				
+			
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				String ip = null;
-				int port = 0;
-				
-				ip = ipInput.getText();
-				port = Integer.parseInt(portInput.getText()); 									 //String을 Int로 바꾸는 방법! 
-				
+			public void mouseClicked(MouseEvent e) {			
 				try {
-					socket = new Socket(ip, port);												 //접속 위한 소켓 생성
-					
-					JOptionPane.showMessageDialog(null, 
-							socket.getInetAddress() + "서버 접속", 
-							"접속 성공", 
-							JOptionPane.INFORMATION_MESSAGE);
-					ClientRecive clientRecive = new ClientRecive(socket);
-					clientRecive.start();					
-					
-					username =  JOptionPane.showInputDialog(null, "사용자 이름을 입력해 주세요.", "이름입력", JOptionPane.INFORMATION_MESSAGE);
-					JoinReqDto joinReqDto = new JoinReqDto(username);
-					String joinReqDtoJson = gson.toJson(joinReqDto);
-					RequestDto requestDto = new RequestDto("join", joinReqDtoJson);
-					String reqestDtoJson = gson.toJson(requestDto);
-					
-					OutputStream outputStream = socket.getOutputStream();
-					PrintWriter out = new PrintWriter(outputStream, true);			//output 열면 printWriter 생성해줘야함
-					out.println(reqestDtoJson);
-					
-					
+					alreadyCon();
+					connectButton.setEnabled(false);
+					connectButton.removeMouseListener(this);
 				}catch (ConnectException e1) {
 					
 					JOptionPane.showMessageDialog(null,  
@@ -129,8 +109,10 @@ public class ChattingClient extends JFrame {
 				}
 			}
 		});
-		connect.setBounds(458, 20, 69, 23);
-		contentPane.add(connect);
+		
+		connectButton.setBounds(458, 20, 69, 23);
+		contentPane.add(connectButton);
+		
 		
 		portInput = new JTextField();
 		portInput.setText("9090"); //미리작성해놈
@@ -141,16 +123,17 @@ public class ChattingClient extends JFrame {
 		JScrollPane contentScoll = new JScrollPane();
 		contentScoll.setBounds(12, 10, 275, 399);
 		contentPane.add(contentScoll);
-		
+	
 		contentView = new JTextArea();  						//전역으로 뺌! 멤버변수에 대입하기 위해서임
-		contentScoll.setViewportView(contentView);
+		contentView.setEditable(false); 						//contentView 글자 작성 삭제 불가
+		contentScoll.setViewportView(contentView);//////////
 		
 		JScrollPane userListScroll = new JScrollPane();
 		userListScroll.setBounds(309, 64, 218, 343);
 		contentPane.add(userListScroll);
 		
 		userListModel = new DefaultListModel<>();
-		userList = new JList(userListModel);
+		userList = new JList<String>(userListModel);
 		userListScroll.setViewportView(userList);
 		
 		JScrollPane messageScroll = new JScrollPane();
@@ -162,21 +145,7 @@ public class ChattingClient extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if(!messageInput.getText().isBlank()) { //공백체크 => 비어있지 않을때만 동작.	
-						try {
-							OutputStream outputStream = socket.getOutputStream();
-							PrintWriter out = new PrintWriter(outputStream, true);
-							
-							MessageReqDto messageReqDto = new MessageReqDto("all", username, messageInput.getText()); 
-							
-							sendRequest("sendMessage", gson.toJson(messageReqDto));
-							
-							messageInput.setText("");
-							
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					}
+					snedMessage();
 				}
 			}
 		});
@@ -186,21 +155,7 @@ public class ChattingClient extends JFrame {
 		sendButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(!messageInput.getText().isBlank()) { //공백체크 => 비어있지 않을때만 동작.	
-					try {
-						OutputStream outputStream = socket.getOutputStream();
-						PrintWriter out = new PrintWriter(outputStream, true);
-						
-						MessageReqDto messageReqDto = new MessageReqDto("all", username, messageInput.getText()); 
-						
-						sendRequest("sendMessage", gson.toJson(messageReqDto));
-						
-						messageInput.setText("");
-						
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
+				snedMessage();
 			}
 		});
 		sendButton.setBounds(458, 425, 69, 23);
@@ -221,4 +176,50 @@ public class ChattingClient extends JFrame {
 		}
 		
 	}
+	
+	private void snedMessage() {
+		if(!messageInput.getText().isBlank()) { //공백체크 => 비어있지 않을때만 동작.	
+			
+			String toUser = userList.getSelectedIndex() == 0 ? "all" : userList.getSelectedValue();
+		
+			MessageReqDto messageReqDto =
+					new MessageReqDto(toUser, username, messageInput.getText()); 
+				
+			sendRequest("sendMessage", gson.toJson(messageReqDto));
+			messageInput.setText("");
+		}
+	}
+
+	private void alreadyCon() throws IOException {
+		String ip = null;
+		int port = 0;
+		
+		ip = ipInput.getText();
+		port = Integer.parseInt(portInput.getText()); 
+		
+		if(socket != null) {
+			return;
+		}else {
+			socket = new Socket(ip, port);												 //접속 위한 소켓 생성
+			
+			JOptionPane.showMessageDialog(null, 
+					socket.getInetAddress() + "서버 접속", 
+					"접속 성공", 
+					JOptionPane.INFORMATION_MESSAGE);
+			
+			ClientRecive clientRecive = new ClientRecive(socket);
+			clientRecive.start();					
+			
+			username =  JOptionPane.showInputDialog(null, "사용자 이름을 입력해 주세요.", "이름입력", JOptionPane.INFORMATION_MESSAGE);
+			JoinReqDto joinReqDto = new JoinReqDto(username);
+			String joinReqDtoJson = gson.toJson(joinReqDto);
+			RequestDto requestDto = new RequestDto("join", joinReqDtoJson);
+			String reqestDtoJson = gson.toJson(requestDto);
+			
+			OutputStream outputStream = socket.getOutputStream();
+			PrintWriter out = new PrintWriter(outputStream, true);			//output 열면 printWriter 생성해줘야함
+			out.println(reqestDtoJson);
+		}
+	}
+
 }
