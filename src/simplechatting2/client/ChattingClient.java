@@ -68,7 +68,7 @@ public class ChattingClient extends JFrame {
 	}
 
 	
-	public ChattingClient() {
+	private ChattingClient() {
 		gson = new Gson();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

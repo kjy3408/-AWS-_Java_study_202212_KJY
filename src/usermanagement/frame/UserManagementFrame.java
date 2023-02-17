@@ -292,7 +292,7 @@ public class UserManagementFrame extends JFrame {
 					}
 					
 					JOptionPane.showMessageDialog(null, responseDto.getBody(), responseDto.getCode(), JOptionPane.INFORMATION_MESSAGE);
-					mainCard.show(mainPanel, "loginPanel");
+//					mainCard.show(mainPanel, "loginPanel");
 					clearFields(registerFields); //화면 전환 일어날때마다 해줘야함.
 					
 					System.out.println(responseDto);  //없어도됨
