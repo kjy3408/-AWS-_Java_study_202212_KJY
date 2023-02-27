@@ -35,9 +35,11 @@ public class ClientRecive extends Thread{
 					case "join" :
 						JoinRespDto joinRespDto = gson.fromJson(responseDto.getBody(), JoinRespDto.class);
 						ChattingClient.getInstance().getContentView().append(joinRespDto.getWelcomeMessage() + "\n");
+						
+						
 						ChattingClient.getInstance().getUserListModel().clear();
 						ChattingClient.getInstance().getUserListModel().addElement("--- 전체 ---");
-						ChattingClient.getInstance().getUserListModel().addAll(joinRespDto.getConnectedUsers());;
+						ChattingClient.getInstance().getUserListModel().addAll(joinRespDto.getConnectedUsers());
 						ChattingClient.getInstance().getUserList().setSelectedIndex(0);//"---전체---가 항상 첫번째에 select되어있음.
 						break;
 					case "sendMessage" :
