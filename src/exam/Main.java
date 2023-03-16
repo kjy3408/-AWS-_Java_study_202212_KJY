@@ -1,21 +1,20 @@
 package exam;
 
-import java.util.ArrayList;
+import java.math.BigInteger;
+import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		int n = scanner.nextInt();
 		
-		ArrayList<Integer> numbers = new ArrayList<>();
-		numbers.add(1);
-		numbers.add(2);
-		numbers.add(3);
-		
-		for(int i = 0; i < numbers.size(); i++) {
-			System.out.println(numbers.get(i));
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n+j; i++) {
+				
+				System.out.println("*");
+			}
 		}
 		
 		
-		System.out.println(numbers.contains(1));
-	
 	}
 }
